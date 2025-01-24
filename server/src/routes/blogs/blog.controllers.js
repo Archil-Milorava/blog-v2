@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Blog from "../../models/blog.model.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const getAllBlogs = async (req, res) => {
   try {
@@ -49,14 +50,20 @@ export const getBlog = async (req, res) => {
 
 export const createBlog = async (req, res) => {
   try {
-    const { title, content, image } = req.body;
+    const { title, content } = req.body;
+    let { image } = req.body;
 
-    console.log(req.file);
+    // console.log(req.file);
 
-    if (!title || (!content && !image)) {
+    if (!title || !content) {
       return res.status(400).json({
         message: "title and the content are required",
       });
+    }
+
+    if (image) {
+      const res = await cloudinary.uploader.upload(image);
+      image = res.secure_url;
     }
 
     const newBlog = new Blog({
