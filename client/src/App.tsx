@@ -7,7 +7,7 @@ const App = () => {
     <main className="pt-5 h-auto min-h-screen w-full sm:px-[17rem] px-4 bg-[#F4F4F4] text-black font-main">
       <Header />
       <Navbar />
-      {/* <Carousel /> */}
+      <Carousel />
     </main>
   )
 }
