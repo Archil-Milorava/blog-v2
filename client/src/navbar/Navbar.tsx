@@ -2,7 +2,7 @@ const Navbar = () => {
   return (
     <div>
       {/* big screen */}
-      <nav className="px-4 py-1 h-[2rem] max-[8rem] border-b border-black sm:block hidden font-bold">
+      <nav className="px-4  py-1 h-[2rem] max-[8rem] border-b border-black sm:block hidden font-bold">
         <ul className="sm:flex sm:items-center sm:justify-center gap-5 uppercase tracking-wide text-sm">
           <li>
             <a

@@ -1,24 +1,23 @@
-import BackToTop from "../components/BackToTop";
 import Carousel from "../components/Carousel";
 import BlogItem from "../components/grid/BlogItem";
+import SectionDeviderWrapper from "../ui/SectionDeviderWrapper";
 
 const Landing = () => {
-  const blogItems = Array(5).fill(true)
+  const blogItems = Array(4).fill(true);
 
   return (
-    <section className="h-full">
+    <section className=" h-auto w-full">
       <Carousel />
-      <div className="mt-4 border-t border-b border-black w-full py-2 flex items-center justify-center">
+      <SectionDeviderWrapper>
         <h1 className="font-extrabold uppercase tracking-widest">Blog Posts</h1>
-      </div>
+      </SectionDeviderWrapper>
 
-      <div className="grid gap-2 sm:grid-cols-3 sm:grid-rows-2 grid-cols-1 grid-rows-4">
-        {blogItems.map((_, index) => (
-          <BlogItem key={index}  />
+      {/* grid */}
+      <div className=" w-full h-auto grid grid-cols-1 sm:grid-cols-3  gap-2">
+        {blogItems.map(() => (
+          <BlogItem />
         ))}
       </div>
-      
-      <BackToTop />
     </section>
   );
 };
