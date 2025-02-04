@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@tiptap/extension-bold": "^2.11.4",
     "concurrently": "^9.1.0"
   }
 }
