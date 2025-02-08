@@ -26,28 +26,28 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
   return (
     <div className="control-group h-14  shadow-md">
       <div className="button-group flex justify-center gap-3 h-full w-full">
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}
           className={editor.isActive("bold") ? "is-active" : ""}
         >
           <Bold size={20} />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
           className={editor.isActive("italic") ? "is-active" : ""}
         >
           <Italic size={20} />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleStrike().run()}
           disabled={!editor.can().chain().focus().toggleStrike().run()}
           className={editor.isActive("strike") ? "is-active" : ""}
         >
           <Strikethrough size={20} />
         </button>
-        <button
+        <button type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 1 }).run()
           }
@@ -57,7 +57,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
         >
           <Heading1 size={20} />
         </button>
-        <button
+        <button type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
@@ -68,22 +68,22 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
           <Heading3 size={20} />
         </button>
 
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
           className={editor.isActive("blockquote") ? "is-active" : ""}
         >
           <Quote size={20} />
         </button>
-        <button onClick={() => editor.chain().focus().setHardBreak().run()}>
+        <button type="button" onClick={() => editor.chain().focus().setHardBreak().run()}>
           <WrapText size={20} />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}
         >
           <Undo size={20} />
         </button>
-        <button
+        <button type="button"
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().chain().focus().redo().run()}
         >
