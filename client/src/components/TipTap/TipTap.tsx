@@ -4,7 +4,7 @@ import StarterKit from "@tiptap/starter-kit";
 import MenuBar from "./MenuBar";
 import "./tiptap.css";
 import axios from "axios";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 //http://localhost:8000/api/v1/create
 
@@ -12,16 +12,25 @@ const TipTap = () => {
   const [blog, setBlog] = useState({
     title: "",
     content: "",
-    image: ""
+    image: "",
   });
 
   const [loading, setLoading] = useState(false);
 
   const editor = useEditor({
     extensions: [StarterKit, Blockquote],
-    content: ""
+    content: "",
   });
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      setBlog((prev) => ({ ...prev, image: reader.result as string }));
+    };
+    reader.readAsDataURL(file);
+  };
 
   const postBlog = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,14 +40,14 @@ const TipTap = () => {
       ...blog,
       content: editor.getHTML(),
     };
-
-    setBlog(updatedBlog);
+    console.log(updatedBlog);
 
     try {
       setLoading(true);
       await axios.post("http://localhost:8000/api/v1/create", updatedBlog);
       console.log("posted");
-      setBlog({ title: "", content: "", image:"" });
+      setBlog({ title: "", content: "", image: "" });
+      editor.commands.setContent("")
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -58,12 +67,11 @@ const TipTap = () => {
         className="bg-white min-h-[3rem] h-auto rounded-md shadow-md text-xl font-bold px-2"
         placeholder="Title"
         value={blog.title}
-        onChange={(e) => setBlog({ ...blog, title: e.target.value })}
+        onChange={(e) =>
+          setBlog((prev) => ({ ...prev, title: e.target.value }))
+        }
       />
-      {/* <input type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-      /> */}
+      <input type="file" accept="image/*" onChange={handleImageUpload} />
       <div className="container_editor">
         <EditorContent editor={editor} />
       </div>
