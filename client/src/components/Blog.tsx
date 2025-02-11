@@ -1,4 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { Heart, MessageCircle } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { getBlog } from "../services/blogsAPI";
 
 const data = {
   title:
@@ -12,8 +15,23 @@ const data = {
 };
 
 const Blog = () => {
+
+
+  const {id} =  useParams()
+
+  console.log(id);
+  
+
+ const {data:blog, isLoading} =  useQuery({
+    queryKey: ["blog"],
+    queryFn: getBlog(id)
+  })
+
+  console.log(blog);
+  
+
   return (
-    <article className="w-full h-full flex flex-col gap-1">
+    <article className={` ${isLoading && 'opacity-50'} w-full h-full flex flex-col gap-1`}>
       <div className=" sm:h-[30rem] h-[17rem] w-full  ">
         <img
           src={data.image}

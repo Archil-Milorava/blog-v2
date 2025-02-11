@@ -1,7 +1,9 @@
+import { Link } from "react-router-dom";
+
 const Header = () => {
   return (
     <header className="py-4 border-t border-b border-black flex flex-col items-center gap-4 sm:flex-row sm:justify-between sm:items-center">
-      <div className="text-4xl font-bold uppercase cursor-pointer">Blog post</div>
+      <Link to={`/`} className="text-4xl font-bold uppercase cursor-pointer">Blog post</Link>
       <div>
         <label className="bg-white border border-black px-1 w-[14rem] h-6 flex items-center gap-2 text-sm">
           <input

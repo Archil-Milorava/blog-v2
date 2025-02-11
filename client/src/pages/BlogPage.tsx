@@ -3,6 +3,9 @@ import LatestBlog from "../components/LatestBlog";
 import SectionDeviderWrapper from "../ui/SectionDeviderWrapper";
 
 const BlogPage = () => {
+
+ 
+
   return (
     <section className=" w-full h-auto my-2  flex flex-col sm:flex-row gap-1 sm:gap-3">
       <div className=" h-auto sm:w-8/12 w-full ">

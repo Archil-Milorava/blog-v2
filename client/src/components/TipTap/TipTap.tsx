@@ -1,25 +1,36 @@
+import { useMutation } from "@tanstack/react-query";
 import Blockquote from "@tiptap/extension-blockquote";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { createBlog } from "../../services/blogsAPI";
 import MenuBar from "./MenuBar";
 import "./tiptap.css";
-import axios from "axios";
-import { ChangeEvent, useState } from "react";
-
-//http://localhost:8000/api/v1/create
 
 const TipTap = () => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: createBlog,
+    onSuccess: () => {
+      toast.success("Posted");
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
   const [blog, setBlog] = useState({
     title: "",
     content: "",
     image: "",
   });
 
-  const [loading, setLoading] = useState(false);
-
   const editor = useEditor({
     extensions: [StarterKit, Blockquote],
     content: "",
+    onUpdate: ({ editor }) => {
+      setBlog((prev) => ({ ...prev, content: editor.getHTML() }));
+    },
   });
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,30 +46,13 @@ const TipTap = () => {
   const postBlog = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!editor) return;
-
-    const updatedBlog = {
-      ...blog,
-      content: editor.getHTML(),
-    };
-    console.log(updatedBlog);
-
-    try {
-      setLoading(true);
-      await axios.post("http://localhost:8000/api/v1/create", updatedBlog);
-      console.log("posted");
-      setBlog({ title: "", content: "", image: "" });
-      editor.commands.setContent("")
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+    console.log(blog);
+    mutate(blog);
   };
 
   return (
     <form
-      className={`flex flex-col gap-2 ${loading && "opacity-10"}`}
+      className={`flex flex-col gap-2 ${isPending && "opacity-10"}`}
       onSubmit={postBlog}
     >
       <MenuBar editor={editor} />
