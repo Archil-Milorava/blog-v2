@@ -42,7 +42,9 @@ export const getBlog = async (id: string | undefined) => {
 
       const response: Blog = data.data?.blog
   
-  
+      // console.log(response);
+      
+
       return response;
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

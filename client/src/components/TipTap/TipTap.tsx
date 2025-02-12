@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Blockquote from "@tiptap/extension-blockquote";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -9,10 +9,12 @@ import MenuBar from "./MenuBar";
 import "./tiptap.css";
 
 const TipTap = () => {
+  const queryClient = useQueryClient();
   const { mutate, isPending } = useMutation({
     mutationFn: createBlog,
     onSuccess: () => {
       toast.success("Posted");
+      queryClient.invalidateQueries({ queryKey: ["blogs"] });
     },
     onError: (err) => {
       toast.error(err.message);

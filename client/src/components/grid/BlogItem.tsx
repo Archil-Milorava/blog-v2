@@ -23,12 +23,13 @@ const BlogItem: React.FC<BlogItemsProps> = ({blog}) => {
       {/* titile */}
       <div className="h-1/2 w-full flex flex-col items-center justify-center gap-1">
         
-      <h1 className="h-auto max-h-[4rem]  text-lg font-semibold tracking-wider text-center overflow-hidden w-full ">
+      <h1 className="h-auto  max-h-[4rem]  text-lg font-semibold tracking-wider text-center overflow-hidden w-full ">
         {blog.title}
       </h1>
 
       {/* content */}
-      <p className="text-sm text-center px-1">{truncateText}</p>
+      {/* <p className="text-sm text-center px-1">{truncateText}</p> */}
+        <div dangerouslySetInnerHTML={{__html: truncateText}} className="text-sm" />
 
       {/* author */}
       <h2 className="uppercase ">

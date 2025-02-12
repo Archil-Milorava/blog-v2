@@ -10,7 +10,7 @@ import ErrorBoundary from "./pages/ErrorBoundary";
 
 const App = () => {
   return (
-    <main className=" p-4  h-auto min-h-screen w-full sm:px-[28rem]  bg-[#F4F4F4] text-black font-main ">
+    <main className=" p-2  h-auto min-h-screen w-full sm:px-[18rem]  bg-[#F4F4F4] text-black font-main ">
       <Header />
         <Navbar />
       
