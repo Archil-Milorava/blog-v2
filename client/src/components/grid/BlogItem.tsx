@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { Blog } from "../../types/Blog";
+import { format } from "date-fns";
+
 
 interface BlogItemsProps {
   blog: Blog
@@ -33,7 +35,7 @@ const BlogItem: React.FC<BlogItemsProps> = ({blog}) => {
 
       {/* author */}
       <h2 className="uppercase ">
-        <span>DEc 16 2024</span> <span className="hover:underline transition-all cursor-pointer">Archil milorava</span>
+        <span>{format(new Date(blog.createdAt), "dd MMM yyyy")}</span> <span className="hover:underline transition-all cursor-pointer">Archil milorava</span>
       </h2>
       </div>
     </Link>

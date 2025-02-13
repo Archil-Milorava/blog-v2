@@ -1,12 +1,16 @@
 import cors from "cors";
 import "dotenv/config";
 import express from "express";
+import cookieParser from "cookie-parser";
 
 import { v2 as cloudinary } from "cloudinary";
 
 import blogRouter from "./routes/blogs/blog.routes.js";
+import userRouter from "./routes/users/user.routes.js";
 
 const app = express();
+
+app.use(cookieParser())
 
 app.use(
   cors({
@@ -26,5 +30,6 @@ app.use(express.json({
 }));
 
 app.use("/api/v1", blogRouter);
+app.use("/api/v1", userRouter)
 
 export default app;

@@ -3,6 +3,7 @@ import { Heart, MessageCircle } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { getBlog } from "../services/blogsAPI";
 import Spinner from "../ui/Spinner";
+import { format } from "date-fns";
 
 const Blog = () => {
   const { id } = useParams();
@@ -13,11 +14,9 @@ const Blog = () => {
 
   if (isLoading) return <Spinner size="large" />;
 
-  if(!blog) return <div>Blog not found</div>
+  if (!blog) return <div>Blog not found</div>;
 
-  const {  title, content, image, createdAt } = blog;
-
-  
+  const { title, content, image, createdAt } = blog;
 
   return (
     <article
@@ -29,7 +28,9 @@ const Blog = () => {
         <img src={image} alt="asd" className="h-full w-full object-cover" />
       </div>
       <div className="w-full h-auto uppercase text-sm flex flex-col sm:flex-row items-center gap-1 sm:gap-4 sm:my-2">
-        <p>Published: {createdAt}</p>
+        <p className="text-sm font-semibold text-center">
+          {format(new Date(createdAt), "dd MMM yyyy")}
+        </p>
         <p>
           | by
           <a className="hover:underline cursor-pointer transition-all"> achi</a>
@@ -53,7 +54,10 @@ const Blog = () => {
       </div>
       <div className="w-full h-auto">
         {/* <p className=" text-sm text-left leading-6">{content}</p> */}
-        <div className="text-left leading-6" dangerouslySetInnerHTML={{__html: content}} />
+        <div
+          className="text-left leading-6"
+          dangerouslySetInnerHTML={{ __html: content }}
+        />
       </div>
     </article>
   );
