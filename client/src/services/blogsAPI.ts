@@ -5,7 +5,7 @@ import { Blog, createBlogType } from "../types/Blog";
 
 export const createBlog = async (blog: createBlogType) => {
   try {
-    const data = await axios.post("http://localhost:8000/api/v1/create", blog);
+    const data = await axios.post("http://localhost:8000/api/v1/create", blog, {withCredentials: true});
 
     return data;
   } catch (error: unknown) {

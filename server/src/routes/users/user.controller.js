@@ -62,7 +62,7 @@ export const logIn = async (req, res) => {
     const existingUser = await User.findOne({ userName });
 
     if (!existingUser) {
-      return res.status(200).json({
+      return res.status(400).json({
         message: "please enter valid credentials",
       });
     }
@@ -70,7 +70,7 @@ export const logIn = async (req, res) => {
     const isMatch = await bcrypt.compare(password, existingUser.password || "");
 
     if (!isMatch) {
-      return res.status(200).json({
+      return res.status(400).json({
         message: "please enter valid credentials",
       });
     }

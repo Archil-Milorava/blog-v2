@@ -7,7 +7,7 @@ const userRouter = express.Router()
 
 
 userRouter.post('/createUser', createUser)
-userRouter.get('/login', logIn)
+userRouter.post('/login', logIn)
 userRouter.get('/logOut', logOut)
 userRouter.get('/currentUser', protectedRoute, authCheck)
 

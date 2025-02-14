@@ -7,7 +7,8 @@ import {
   updateBlog,
 } from "./blog.controllers.js";
 
-import {protectedRoute} from './../../middleware/protectedRoute.js'
+import {protectedRoute} from "./../../middleware/protectedRoute.js"
+
 
 const blogRouter = express.Router();
 

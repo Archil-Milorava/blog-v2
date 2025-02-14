@@ -1,3 +1,5 @@
+import { User } from "./User"
+
 export interface createBlogType {
     title: string,
     content: string,
@@ -12,3 +14,4 @@ export interface Blog {
     createdAt: string,
     updatedAt: string
 }
+
