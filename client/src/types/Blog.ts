@@ -1,4 +1,3 @@
-import { User } from "./User"
 
 export interface createBlogType {
     title: string,
@@ -11,6 +10,7 @@ export interface Blog {
     title: string,
     content: string,
     image: string,
+    likes: string[],
     createdAt: string,
     updatedAt: string
 }

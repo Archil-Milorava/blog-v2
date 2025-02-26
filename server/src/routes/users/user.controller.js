@@ -1,6 +1,7 @@
 import User from "../../models/user.model.js";
 
 import bcrypt from "bcrypt";
+import Blog from "../../models/blog.model.js";
 import { generateToken } from "../../utils/generatoToken.js";
 
 export const createUser = async (req, res) => {
@@ -110,6 +111,50 @@ export const authCheck = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.log("error from authCheck", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const likeUnlikePost = async (req, res) => {
+  const userId = req.user._id;
+  const { blogId } = req.params;
+  try {
+    const blog = await Blog.findById(blogId);
+
+    if (!blog) {
+      return res.status(400).json({
+        message: "Blog can not be found",
+      });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User can not be found",
+      });
+    }
+
+    const alreadyLiked = blog.likes.includes(userId);
+
+    if (alreadyLiked) {
+      //unlike
+      await Blog.findByIdAndUpdate(blogId, { $pull: { likes: userId } });
+      await User.findByIdAndUpdate(userId, { $pull: { likes: blogId } });
+    } else {
+      //like
+      await Blog.findByIdAndUpdate(blogId, { $push: { likes: userId } });
+      await User.findByIdAndUpdate(userId, { $push: { likes: blogId } });
+    }
+
+    // const updatedBlog = await Blog.findById(blogId)
+
+
+    res.status(201).json({
+      message: alreadyLiked ? "unliked" : "liked",
+    });
+  } catch (error) {
+    console.log("error from likeUnlikePost", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

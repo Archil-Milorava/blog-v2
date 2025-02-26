@@ -1,4 +1,5 @@
-import {createServer} from "http";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 import connectDB from "./DB/connectDB.js";
 import app from "./app.js";

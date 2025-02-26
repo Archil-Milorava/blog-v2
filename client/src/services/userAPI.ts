@@ -1,6 +1,5 @@
 import axios from "axios";
 import { User } from "../types/User";
-import toast from "react-hot-toast";
 
 interface Payload {
   userName: string;
@@ -67,7 +66,6 @@ export const getCurrentUser = async (): Promise<User> => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      toast.error(error.response?.data?.message || "failed to fetch user data");
       throw new Error(
         error.response?.data?.message || "failed to fetch user data"
       );

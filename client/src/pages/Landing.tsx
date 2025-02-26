@@ -6,15 +6,10 @@ import SectionDeviderWrapper from "../ui/SectionDeviderWrapper";
 import Spinner from "../ui/Spinner";
 
 const Landing = () => {
-  const {
-    data: blogs,
-    isLoading
-  } = useQuery({
+  const { data: blogs, isLoading } = useQuery({
     queryKey: ["blogs"],
     queryFn: getBlogs,
   });
-
- 
 
   if (isLoading) return <Spinner size="large" />;
 

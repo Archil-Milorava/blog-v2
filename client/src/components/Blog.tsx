@@ -1,22 +1,46 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { format } from "date-fns";
 import { Heart, MessageCircle } from "lucide-react";
 import { useParams } from "react-router-dom";
-import { getBlog } from "../services/blogsAPI";
+import { getBlog, likeUnlikeBlog } from "../services/blogsAPI";
 import Spinner from "../ui/Spinner";
-import { format } from "date-fns";
+import toast from "react-hot-toast";
 
 const Blog = () => {
   const { id } = useParams();
+  const queryClient = useQueryClient()
+
+
   const { data: blog, isLoading } = useQuery({
     queryKey: ["blogs", id],
     queryFn: () => getBlog(id),
   });
 
+  const {
+    data,
+    isPaused: isLiking,
+    mutate,
+    error
+  } = useMutation({
+    mutationFn: likeUnlikeBlog,
+    onSuccess: () => {
+      toast.success(data);
+      queryClient.invalidateQueries(["blogs"])
+    },
+    onError: (err)=>{
+      toast.error(error)
+    }
+  });
+
+  function handleLikeUnlike() {
+    mutate(id);
+  }
+
   if (isLoading) return <Spinner size="large" />;
 
   if (!blog) return <div>Blog not found</div>;
 
-  const { title, content, image, createdAt } = blog;
+  const { title, content, image, likes, createdAt } = blog;
 
   return (
     <article
@@ -45,8 +69,12 @@ const Blog = () => {
           <span>12</span>
         </div>
         <div className="text-lg flex items-center gap-1">
-          <Heart className="cursor-pointer hover:opacity-65" size={20} />
-          <span>0</span>
+          <Heart
+            onClick={handleLikeUnlike}
+            className={`cursor-pointer hover:text-red-400  ${isLiking && 'opacity-5'}`}
+            size={20}
+          />
+          <span>{likes.length}</span>
         </div>
       </div>
       <div className="h-auto w-full overflow-hidden">

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useLogin } from "../services/useAuthentication";
 
 const Login = () => {
-  const isPending = false
+  const { login, isLoggingIn } = useLogin();
 
   const [credentials, setCredentials] = useState({
-    userName: "",
-    password: "",
+    userName: "achi",
+    password: "123123",
   });
 
   function handleLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    login(credentials);
   }
 
   return (
@@ -18,7 +20,7 @@ const Login = () => {
       <form
         onSubmit={handleLogin}
         className={`${
-          isPending && "opacity-20"
+          isLoggingIn && "opacity-20"
         }  border border-black w-1/2 h-1/2 flex flex-col gap-2 rounded-md items-center justify-center`}
       >
         <h1 className="mb-5 text-4xl uppercase">Log In</h1>

@@ -1,19 +1,20 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import BackToTop from "./BackToTop";
-import { logOut } from "../../services/userAPI";
-import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useCurrentUser } from "../../services/useAuthentication";
+import { logOut } from "../../services/userAPI";
+import BackToTop from "./BackToTop";
 
 const FooterMain = () => {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { refetch } = useCurrentUser();
 
   const { mutate } = useMutation({
     mutationFn: logOut,
     onSuccess: () => {
       toast.success("Logged out successfully!");
-      queryClient.invalidateQueries({ queryKey: ["currentUser"] });
-      navigate("/login");
+     
+   
     },
     onError: (error) => {
       toast.error(error.message || "Failed to log out");

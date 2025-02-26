@@ -1,7 +1,11 @@
-import { useMutation } from "@tanstack/react-query";
-import { signUp as signUpFunction } from "./userAPI";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import {
+  getCurrentUser,
+  logIn as logInFunction,
+  signUp as signUpFunction,
+} from "./userAPI";
 
 export const useSignUp = () => {
   const navigate = useNavigate();
@@ -18,4 +22,35 @@ export const useSignUp = () => {
   });
 
   return { signUp, isSigningUp };
+};
+
+export const useLogin = () => {
+  const navigate = useNavigate();
+
+  const { mutate: login, isPending: isLoggingIn } = useMutation({
+    mutationFn: logInFunction,
+    onSuccess: () => {
+      toast.success("welcome");
+      navigate("/");
+    },
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
+  return { login, isLoggingIn };
+};
+
+export const useCurrentUser = () => {
+  const {
+    data: currentUserData,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+    retry: 0,
+  });
+
+  return { currentUserData, isLoading, refetch };
 };
