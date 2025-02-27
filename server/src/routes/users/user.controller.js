@@ -3,6 +3,7 @@ import User from "../../models/user.model.js";
 import bcrypt from "bcrypt";
 import Blog from "../../models/blog.model.js";
 import { generateToken } from "../../utils/generatoToken.js";
+import { io } from "../../server.js";
 
 export const createUser = async (req, res) => {
   const { userName, password } = req.body;
@@ -147,8 +148,11 @@ export const likeUnlikePost = async (req, res) => {
       await User.findByIdAndUpdate(userId, { $push: { likes: blogId } });
     }
 
-    // const updatedBlog = await Blog.findById(blogId)
+    const updatedBlog = await Blog.findById(blogId)
 
+    io.emit("likeUpdated", {
+      likesCount: updatedBlog.likes.length,
+    });
 
     res.status(201).json({
       message: alreadyLiked ? "unliked" : "liked",

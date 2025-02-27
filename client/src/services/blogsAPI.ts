@@ -65,7 +65,7 @@ export const likeUnlikeBlog = async (blogId: string | undefined) => {
       { withCredentials: true }
     );
 
-    return res.data.message
+    return res.data.message;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       throw new Error(error.response?.data?.message);

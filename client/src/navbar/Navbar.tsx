@@ -1,8 +1,15 @@
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Link } from "react-router-dom";
 import { useCurrentUser } from "../services/useAuthentication";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const Navbar = () => {
-  const { currentUserData } = useCurrentUser();
+  const { currentUserData, isLoading } = useCurrentUser();
+
+  
+
   return (
     <div>
       {/* big screen */}
@@ -25,7 +32,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            {!currentUserData && (
+            {!currentUserData && !isLoading && (
               <Link
                 to={`/login`}
                 className="hover:underline transition-all cursor-pointer"

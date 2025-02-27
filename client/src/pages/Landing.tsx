@@ -1,6 +1,6 @@
+import GridItem from "@/components/grid/GridItem";
 import { useQuery } from "@tanstack/react-query";
 import Carousel from "../components/Carousel";
-import BlogItem from "../components/grid/BlogItem";
 import { getBlogs } from "../services/blogsAPI";
 import SectionDeviderWrapper from "../ui/SectionDeviderWrapper";
 import Spinner from "../ui/Spinner";
@@ -24,7 +24,7 @@ const Landing = () => {
       {/* grid */}
       <div className=" w-full h-auto grid grid-cols-1 sm:grid-cols-3  gap-2">
         {blogs && blogs.length > 0 ? (
-          blogs.map((blog) => <BlogItem key={blog._id} blog={blog} />)
+          blogs.map((blog) => <GridItem key={blog._id} blog={blog} />)
         ) : (
           <div className=" w-full h-screen flex items-center justify-center text-center text-4xl">
             no data

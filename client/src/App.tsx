@@ -10,12 +10,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
-// import io from "socket.io-client"
-
-// const socket = io("http://localhost:5000", {withCredentials: true})
-
 const App = () => {
-  
   return (
     <main className="p-2 h-auto min-h-screen w-full sm:px-[18rem] bg-[#F4F4F4] text-black font-main">
       <Header />
